@@ -1,0 +1,23 @@
+{
+    "name": "vasil/turshija",
+    "description": "Pickled mixed vegetables",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vasil Zidrovski"
+        }
+    ],
+    "require": {
+         "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vasil\\Turshija\\": "src/"
+        }
+    },
+    "version": "0.0.1",
+    "bin": [
+        "bin/turshija"
+    ]
+}
