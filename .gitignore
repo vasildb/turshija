@@ -1,2 +1,8 @@
 .DS_Store
 docker
+vendor
+src/test
+src/turshija
+web
+.php-cs-fixer*
+dist
