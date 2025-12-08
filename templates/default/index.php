@@ -9,7 +9,7 @@
     <meta name="description" content="<?= $website->getProp('meta-description') ?>" />
     <meta content="<?= $website->getProp('meta-keywords') ?>" name="keywords" />
 
-    <link href="./assets/css/style.css" rel="stylesheet" />
+    <link href="/assets/css/style.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="<?= $website->getProp('favicon') ?>" />
     <title><?= $title; ?></title>
     <link rel="canonical" href="https://www.nuweb.dev/blog/unleash-the-power-of-tailwind-css-a-modern-web-development-framework.html" />

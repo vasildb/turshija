@@ -2,6 +2,7 @@
 
 namespace Vasil\Turshija;
 
+use Vasil\Turshija\Helpers\App;
 use Vasil\Turshija\Helpers\Parse;
 use Vasil\Turshija\Helpers\Template;
 use Vasil\Turshija\Helpers\File;
@@ -22,12 +23,10 @@ class Turshija
 
     private function preparePosts()
     {
-        $posts = glob('../web/posts/*.md');
+        $posts = glob(App::root() . '/web/posts/*.md');
 
         foreach ($posts as $p) {
-            $contents = file_get_contents($p);
-            $name = substr(basename($p), 0, -3) . '.html';
-            $data = Parse::content($contents);
+            $data = Parse::content($p);
 
             $header = Template::render('header.php');
             $footer = Template::render('footer.php');
@@ -41,14 +40,14 @@ class Turshija
                 'website' => $this->websiteData,
             ]);
 
-            File::save('../dist/' . $name, $final);
+            File::save(App::root() . '/dist' . $data->getUrl(), $final);
         }
     }
 
     private function prepareAssets()
     {
-        $src = '../templates/default/assets';
-        $dest = '../dist/assets';
+        $src = App::root() . '/templates/default/assets';
+        $dest = App::root() . '/dist/assets';
 
         // @TODO make this without using shell
         shell_exec("cp -r $src $dest");
@@ -56,7 +55,6 @@ class Turshija
 
     private function loadIndex()
     {
-        $contents = file_get_contents('../web/index.md');
-        return Parse::content($contents);
+        return Parse::content(App::root() . '/web/index.md');
     }
 }

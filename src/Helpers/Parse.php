@@ -2,20 +2,31 @@
 
 namespace Vasil\Turshija\Helpers;
 
+use Vasil\Turshija\Exceptions\TemplateFileDoesNotExist;
+
 class Parse
 {
-    public static function content(string $text): PageData
+    public static function content(string $file): PageData
     {
+        if (!file_exists($file))
+            throw new TemplateFileDoesNotExist($file);
+
+        $text = file_get_contents($file);
+
         $regex = '/^---/m';
         preg_match_all($regex, $text, $matches, PREG_OFFSET_CAPTURE);
+
+        if (count($matches[0]) !== 2) {
+            return new PageData([], '');
+        }
 
         $props = self::parseFrontMatter(trim(substr($text, $matches[0][0][1], $matches[0][1][1] + 3)));
         $html = self::parseMarkdown((trim(substr($text, $matches[0][1][1] + 3))));
 
-        return new PageData($props, $html);
+        return new PageData($props, $html, $file);
     }
 
-    private static function parseMarkdown(string $text)
+    private static function parseMarkdown(string $text): string
     {
         // Escape HTML to prevent XSS
         $text = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -90,7 +101,7 @@ class Parse
         return $text;
     }
 
-    private static function parseFrontMatter($text)
+    private static function parseFrontMatter($text): array
     {
         $data = [];
 
