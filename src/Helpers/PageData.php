@@ -50,7 +50,7 @@ class PageData
 
     private function fileToUrl(string $file): string
     {
-        $path = substr($file, strlen(App::webDir()));
+        $path = substr($file, strlen(App::contentsDir()));
         $path = substr($path, 0, -3) . '.html';
 
         return $path;

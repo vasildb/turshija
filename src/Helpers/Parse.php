@@ -2,6 +2,7 @@
 
 namespace Vasil\Turshija\Helpers;
 
+use Parsedown;
 use Vasil\Turshija\Exceptions\TemplateFileDoesNotExist;
 
 class Parse
@@ -28,6 +29,9 @@ class Parse
 
     private static function parseMarkdown(string $text): string
     {
+        $Parsedown = new Parsedown();
+
+        return $Parsedown->text($text);
         // Escape HTML to prevent XSS
         $text = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 

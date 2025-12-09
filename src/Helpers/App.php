@@ -13,8 +13,9 @@ class App
         return substr($dir, 0, $pos);
     }
 
-    public static function webDir(): string
+    public static function contentsDir(): string
     {
-        return self::root() . '/web';
+        $opts = getopt('', ['from:']);
+        return $opts['from'];
     }
 }

@@ -11,11 +11,24 @@ class Turshija
 {
     private $websiteData = null;
 
+    public function __construct($from, $to)
+    {
+        if (!is_dir($from))
+            throw new \Exception($from . ' does not exist.');
+
+        if (!is_dir($to))
+            mkdir($to);
+
+        if ((count(scandir($to)) != 2))
+            throw new \Exception($to . ' is not empty.');
+    }
+
     public function go(): int
     {
         $this->websiteData = $this->loadIndex();
 
-        $this->preparePosts();
+        $posts = $this->preparePosts();
+        $this->prepareHomepage($posts);
         $this->prepareAssets();
 
         return 0;
@@ -23,31 +36,55 @@ class Turshija
 
     private function preparePosts()
     {
-        $posts = glob(App::root() . '/web/posts/*.md');
+        $posts = glob(App::contentsDir() . '/posts/*.md');
+        $postData = [];
 
         foreach ($posts as $p) {
             $data = Parse::content($p);
+            $postData[] = $data;
 
             $header = Template::render('header.php');
             $footer = Template::render('footer.php');
-            $content = Template::render('post.php', ['post' => $data->getHtml()]);
+            $post = Template::render('post.php', ['post' => $data->getHtml()]);
 
             $final = Template::render('index.php', [
                 'header' => $header,
                 'footer' => $footer,
-                'content' => $content,
+                'content' => $post,
                 'title' => $data->getProp('title') . ' - ' . $this->websiteData->getProp('title'),
                 'website' => $this->websiteData,
             ]);
 
             File::save(App::root() . '/dist' . $data->getUrl(), $final);
         }
+
+        return $postData;
+    }
+
+    private function prepareHomepage(array $posts)
+    {
+        $header = Template::render('header.php');
+        $footer = Template::render('footer.php');
+        $homepage = Template::render('homepage.php', ['posts' => $posts]);
+
+        $final = Template::render('index.php', [
+            'header' => $header,
+            'footer' => $footer,
+            'content' => $homepage,
+            'title' => $this->websiteData->getProp('title'),
+            'website' => $this->websiteData,
+        ]);
+        File::save(App::root() . '/dist/index.html', $final);
     }
 
     private function prepareAssets()
     {
-        $src = App::root() . '/templates/default/assets';
-        $dest = App::root() . '/dist/assets';
+        $distPath = App::root() . '/dist';
+        if (!is_dir($distPath))
+            mkdir($distPath, 0755);
+
+        $src = App::root() . '/templates/default/assets/';
+        $dest = App::root() . '/dist/';
 
         // @TODO make this without using shell
         shell_exec("cp -r $src $dest");
@@ -55,6 +92,6 @@ class Turshija
 
     private function loadIndex()
     {
-        return Parse::content(App::root() . '/web/index.md');
+        return Parse::content(App::contentsDir() . '/index.md');
     }
 }

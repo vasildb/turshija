@@ -25,7 +25,7 @@
 
 	.navbar-inner {
 		display: flex;
-		justify-content: flex-end;
+		justify-content: space-between;
 		align-items: center;
 		height: 70px;
 	}
@@ -37,10 +37,30 @@
 	}
 
 	/* BLOG POST TITLE SECTION */
-	.blog-post {
-		max-width: 650px;
+	.blog-post, .homepage {
+		max-width: 50%;
 		margin: 40px auto;
 		text-align: left;
+	}
+
+	.homepage {
+		ul {
+			list-style-type: none;
+
+			li {
+				padding-top: 10px;
+				font-size: 20px;
+				border-bottom: 1px solid rgb(232, 232, 232);
+
+				small {
+					color: grey;
+					margin-right: 10px;
+					font-size: 14px;
+					display: inline-block;
+					width: 100px;
+				}
+			}
+		}
 	}
 
 	.section-title {
@@ -53,7 +73,7 @@
 	.section-line {
 		width: 80px;
 		height: 3px;
-		background: #333;
+		border-bottom: 2px solid purple;
 		margin-top: 15px;
 	}
 
@@ -91,9 +111,24 @@
 
 	.footer-bottom {
 		text-align: right;
-		margin-top: 40px;
 		font-size: 14px;
 		color: #555;
+	}
+
+	blockquote {
+		padding: 0 1em;
+		color: #59636e;
+    	border-left: .25em solid #d1d9e0;
+	}
+
+	pre {
+		background-color: #f6f8fa;
+		padding: 20px;
+	}
+
+	code {
+		background-color: #f6f8fa;
+		padding: 4px;
 	}
 
 	/* Responsive */
