@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+require '../vendor/autoload.php';
+
+use Vasil\Turshija\Turshija;
+
+$opts = getopt('', ['from:', 'to:']);
+
+if (!isset($opts['from']))
+    throw new \Exception("Please provide the content directory path like this: --from=/content/path");
+
+if (!isset($opts['to']))
+    throw new \Exception("Please provide the export directory path like this: --to=/content/path");
+
+$gen = new Turshija($opts['from'], $opts['to']);
+
+$gen->go();
