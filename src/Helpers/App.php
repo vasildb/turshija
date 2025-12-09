@@ -18,4 +18,10 @@ class App
         $opts = getopt('', ['from:']);
         return $opts['from'];
     }
+
+    public static function exportDir(): string
+    {
+        $opts = getopt('', ['to:']);
+        return $opts['to'];
+    }
 }

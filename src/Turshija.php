@@ -17,7 +17,7 @@ class Turshija
             throw new \Exception($from . ' does not exist.');
 
         if (!is_dir($to))
-            mkdir($to);
+            mkdir($to, 0755);
 
         if ((count(scandir($to)) != 2))
             throw new \Exception($to . ' is not empty.');
@@ -55,7 +55,7 @@ class Turshija
                 'website' => $this->websiteData,
             ]);
 
-            File::save(App::root() . '/dist' . $data->getUrl(), $final);
+            File::save(App::exportDir() . $data->getUrl(), $final);
         }
 
         return $postData;
@@ -74,17 +74,13 @@ class Turshija
             'title' => $this->websiteData->getProp('title'),
             'website' => $this->websiteData,
         ]);
-        File::save(App::root() . '/dist/index.html', $final);
+        File::save(App::exportDir() . '/index.html', $final);
     }
 
     private function prepareAssets()
     {
-        $distPath = App::root() . '/dist';
-        if (!is_dir($distPath))
-            mkdir($distPath, 0755);
-
         $src = App::root() . '/templates/default/assets/';
-        $dest = App::root() . '/dist/';
+        $dest = App::exportDir();
 
         // @TODO make this without using shell
         shell_exec("cp -r $src $dest");
