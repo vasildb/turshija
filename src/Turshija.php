@@ -80,10 +80,12 @@ class Turshija
     private function prepareAssets()
     {
         $src = App::root() . '/templates/default/assets/';
+        $src2 = App::contentsDir();
         $dest = App::exportDir();
 
         // @TODO make this without using shell
         shell_exec("cp -r $src $dest");
+        shell_exec("cp -r $src2/assets/* $dest/assets/");
     }
 
     private function loadIndex()
