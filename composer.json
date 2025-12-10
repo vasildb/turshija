@@ -1,7 +1,7 @@
 {
     "name": "vasildb/turshija",
     "description": "Pickled mixed vegetables",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
