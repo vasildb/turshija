@@ -45,7 +45,10 @@ class Turshija
 
             $header = Template::render('header.php');
             $footer = Template::render('footer.php');
-            $post = Template::render('post.php', ['post' => $data->getHtml()]);
+            $post = Template::render('post.php', [
+                'post' => $data->getHtml(),
+                'title' => $data->getProp('title')
+            ]);
 
             $final = Template::render('index.php', [
                 'header' => $header,
