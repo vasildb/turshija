@@ -1,135 +1,220 @@
-/* Basic resets */
-	body {
-		margin: 0;
-		font-family: Arial, sans-serif;
-	}
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+}
 
-	a {
-		text-decoration: none;
-		color: inherit;
-	}
+a {
+	text-decoration: none;
+	color: inherit;
+}
 
-	/* Container */
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 20px;
-	}
+/* Container */
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
 
-	/* NAVBAR */
-	.navbar {
-		background: white;
-		padding: 0;
-		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-	}
+/* NAVBAR */
+.navbar {
+	background: white;
+	padding: 0;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
-	.navbar-inner {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 70px;
-	}
+.navbar-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 70px;
+}
 
-	.nav-link {
-		padding: 20px;
-		color: #333;
-		font-size: 16px;
-	}
+.nav-link {
+	padding: 20px;
+	color: #333;
+	font-size: 16px;
+}
 
-	/* BLOG POST TITLE SECTION */
-	.blog-post, .homepage {
-		max-width: 50%;
-		margin: 40px auto;
-		text-align: left;
-	}
+/* BLOG / HOMEPAGE CONTENT */
+.blog-post,
+.homepage {
+	max-width: 800px;
+	margin: 40px auto;
+	text-align: left;
+	font-size: 22px;
+	line-height: 1.6;
+	padding: 0 20px;
+}
 
+/* HOMEPAGE LIST */
+.homepage ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.homepage ul li {
+	padding-top: 10px;
+	font-size: 20px;
+	border-bottom: 1px solid rgb(232, 232, 232);
+}
+
+.homepage ul li small {
+	color: grey;
+	margin-right: 10px;
+	font-size: 14px;
+	display: inline-block;
+	width: 100px;
+}
+
+/* SECTION TITLE */
+.section-title {
+	margin-top: 40px;
+	padding-top: 40px;
+	font-size: 32px;
+	line-height: 1.4;
+}
+
+.section-line {
+	width: 80px;
+	height: 3px;
+	border-bottom: 2px solid purple;
+	margin-top: 15px;
+}
+
+/* FOOTER */
+footer {
+	background: #f8f9fa;
+	padding: 60px 0;
+	margin-top: 60px;
+}
+
+.footer-columns {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.footer-col {
+	flex: 1;
+	min-width: 200px;
+}
+
+.footer-col ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.footer-col li {
+	margin-bottom: 10px;
+}
+
+.footer-col a {
+	color: #333;
+}
+
+.footer-bottom {
+	text-align: right;
+	font-size: 14px;
+	color: #555;
+}
+
+/* CONTENT ELEMENTS */
+blockquote {
+	padding: 0 1em;
+	color: #59636e;
+	border-left: 0.25em solid #d1d9e0;
+}
+
+pre {
+	background-color: #f6f8fa;
+	padding: 20px;
+	font-size: 15px;
+	overflow-x: auto;
+}
+
+code {
+	background-color: #f6f8fa;
+	padding: 4px;
+	white-space: break-spaces;
+	line-height: 22px;
+}
+
+img {
+	width: 100%;
+	height: auto;
+}
+
+/* ========================= */
+/* RESPONSIVE BREAKPOINTS    */
+/* ========================= */
+
+/* Tablets */
+@media (max-width: 1024px) {
+	.blog-post,
 	.homepage {
-		ul {
-			list-style-type: none;
-
-			li {
-				padding-top: 10px;
-				font-size: 20px;
-				border-bottom: 1px solid rgb(232, 232, 232);
-
-				small {
-					color: grey;
-					margin-right: 10px;
-					font-size: 14px;
-					display: inline-block;
-					width: 100px;
-				}
-			}
-		}
+		font-size: 20px;
 	}
 
 	.section-title {
-		margin-top: 40px;
-		padding-top: 40px;
-		font-size: 32px;
-		line-height: 1.4;
+		font-size: 28px;
+	}
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+	.navbar-inner {
+		flex-direction: column;
+		height: auto;
+		padding: 10px 20px;
 	}
 
-	.section-line {
-		width: 80px;
-		height: 3px;
-		border-bottom: 2px solid purple;
-		margin-top: 15px;
+	.nav-link {
+		padding: 10px;
 	}
 
-	/* FOOTER */
-	footer {
-		background: #f8f9fa;
-		padding: 60px 0;
-		margin-top: 60px;
+	.blog-post,
+	.homepage {
+		font-size: 18px;
+		margin: 20px auto;
+	}
+
+	.section-title {
+		font-size: 24px;
+		margin-top: 20px;
+		padding-top: 20px;
 	}
 
 	.footer-columns {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 20px;
-	}
-
-	.footer-col {
-		flex: 1;
-		min-width: 200px;
-	}
-
-	.footer-col ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	.footer-col li {
-		margin-bottom: 10px;
-	}
-
-	.footer-col a {
-		color: #333;
+		flex-direction: column;
 	}
 
 	.footer-bottom {
-		text-align: right;
-		font-size: 14px;
-		color: #555;
+		text-align: left;
+		margin-top: 20px;
 	}
+}
 
-	blockquote {
-		padding: 0 1em;
-		color: #59636e;
-    	border-left: .25em solid #d1d9e0;
+/* Small phones */
+@media (max-width: 480px) {
+	body {
+		font-size: 16px;
 	}
 
 	pre {
-		background-color: #f6f8fa;
-		padding: 20px;
+		padding: 12px;
+		font-size: 14px;
 	}
 
 	code {
-		background-color: #f6f8fa;
-		padding: 4px;
+		font-size: 14px;
 	}
+
+	blockquote {
+		font-size: 16px;
+	}
+}
 
 	.glitch-wrapper {
 		width: 100%;

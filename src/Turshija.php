@@ -45,7 +45,7 @@ class Turshija
             $postData[] = $data;
 
             $header = Template::render('header.php', [
-                'title' => $data->getProp('title')
+                'title' => $this->websiteData->getProp('title')
             ]);
             $footer = Template::render('footer.php');
             $post = Template::render('post.php', [
