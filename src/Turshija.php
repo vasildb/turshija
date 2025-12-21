@@ -30,6 +30,7 @@ class Turshija
         $posts = $this->preparePosts();
         $this->prepareHomepage($posts);
         $this->prepareAssets();
+        $this->prepareSitemap($posts);
 
         return 0;
     }
@@ -43,7 +44,9 @@ class Turshija
             $data = Parse::content($p);
             $postData[] = $data;
 
-            $header = Template::render('header.php');
+            $header = Template::render('header.php', [
+                'title' => $data->getProp('title')
+            ]);
             $footer = Template::render('footer.php');
             $post = Template::render('post.php', [
                 'post' => $data->getHtml(),
@@ -66,7 +69,9 @@ class Turshija
 
     private function prepareHomepage(array $posts)
     {
-        $header = Template::render('header.php');
+        $header = Template::render('header.php', [
+            'title' => $this->websiteData->getProp('title')
+        ]);
         $footer = Template::render('footer.php');
         $homepage = Template::render('homepage.php', ['posts' => $posts]);
 
@@ -94,5 +99,30 @@ class Turshija
     private function loadIndex()
     {
         return Parse::content(App::contentsDir() . '/index.md');
+    }
+
+    private function prepareSitemap($posts)
+    {
+        $xml = new \XMLWriter();
+        $xml->openURI(App::exportDir() . '/sitemap.xml');
+        $xml->startDocument('1.0', 'UTF-8');
+
+        $xml->startElement('urlset');
+        $xml->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+
+        $xml->startElement('url');
+        $xml->writeElement('loc', $this->websiteData->getProp('base-url'));
+        $xml->writeElement('lastmod', date('Y-m-d'));
+        $xml->endElement();
+
+        foreach ($posts as $p) {
+            $xml->startElement('url');
+            $xml->writeElement('loc', trim($this->websiteData->getProp('base-url'), '/') . $p->getUrl());
+            $xml->writeElement('lastmod', $p->getDate()->format('Y-m-d'));
+            $xml->endElement();
+        }
+
+        $xml->endElement(); // urlset
+        $xml->endDocument();
     }
 }
