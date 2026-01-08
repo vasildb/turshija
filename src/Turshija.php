@@ -61,7 +61,7 @@ class Turshija
                 'website' => $this->websiteData,
             ]);
 
-            File::save(App::exportDir() . $data->getUrl(), $final);
+            File::save(App::exportDir() . $data->getUrl() . '/index.html', $final);
         }
 
         return $postData;

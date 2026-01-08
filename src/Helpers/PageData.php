@@ -50,7 +50,7 @@ class PageData
 
     private function fileToUrl(string $file): string
     {
-        $path = '/' . substr(basename($file), 0, -3) . '.html';
+        $path = '/' . substr(basename($file), 0, -3);
 
         return $path;
     }
