@@ -40,7 +40,7 @@ a {
 	max-width: 800px;
 	margin: 40px auto;
 	text-align: left;
-	font-size: 22px;
+	font-size: 20px;
 	line-height: 1.6;
 	padding: 0 20px;
 }
@@ -69,7 +69,6 @@ a {
 /* SECTION TITLE */
 .section-title {
 	margin-top: 40px;
-	padding-top: 40px;
 	font-size: 32px;
 	line-height: 1.4;
 }
@@ -129,8 +128,12 @@ blockquote {
 pre {
 	background-color: #f6f8fa;
 	padding: 20px;
-	font-size: 15px;
+	font-size: 14px;
 	overflow-x: auto;
+
+	code {
+		font-size: 14px;
+	}
 }
 
 code {
@@ -138,11 +141,17 @@ code {
 	padding: 4px;
 	white-space: break-spaces;
 	line-height: 22px;
+	font-size: 18px;
 }
 
 img {
 	width: 100%;
 	height: auto;
+}
+
+h2 {
+	font-size: 1em;
+	margin-top: 2em;
 }
 
 /* ========================= */
