@@ -18,8 +18,13 @@ class PageData
         $this->html = $html;
 
         $date = $this->getProp('date');
-        if (!empty($date))
-            $this->date = new DateTime($date);
+        if (!empty($date)) {
+            try {
+                $this->date = new DateTime($date);
+            } catch (\Exception) {
+                // Invalid dates are treated as missing
+            }
+        }
 
         $this->url = $this->fileToUrl($file);
     }

@@ -42,6 +42,12 @@ class Turshija
 
         foreach ($posts as $p) {
             $data = Parse::content($p);
+
+            if ($data->getDate() === null) {
+                fwrite(STDERR, "Skipping $p: missing or invalid date.\n");
+                continue;
+            }
+
             $postData[] = $data;
 
             $header = Template::render('header.php', [
@@ -63,6 +69,9 @@ class Turshija
 
             File::save(App::exportDir() . $data->getUrl() . '/index.html', $final);
         }
+
+        // Newest first
+        usort($postData, fn($a, $b) => $b->getDate() <=> $a->getDate());
 
         return $postData;
     }
@@ -87,13 +96,10 @@ class Turshija
 
     private function prepareAssets()
     {
-        $src = App::root() . '/templates/default/assets/';
-        $src2 = App::contentsDir();
-        $dest = App::exportDir();
+        $dest = App::exportDir() . '/assets';
 
-        // @TODO make this without using shell
-        shell_exec("cp -r $src $dest");
-        shell_exec("cp -r $src2/assets/* $dest/assets/");
+        File::copyDir(App::root() . '/templates/default/assets', $dest);
+        File::copyDir(App::contentsDir() . '/assets', $dest);
     }
 
     private function loadIndex()

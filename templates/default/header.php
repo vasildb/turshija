@@ -1,8 +1,8 @@
 <nav class="navbar">
     <div class="container navbar-inner">
         <a href="/" class="glitch-wrapper">
-            <div class="glitch" data-glitch="<?= $title ?>">
-                <?= $title ?>
+            <div class="glitch" data-glitch="<?= htmlspecialchars($title ?? '') ?>">
+                <?= htmlspecialchars($title ?? '') ?>
             </div>
         </a>
         <div>
