@@ -10,6 +10,8 @@
     ],
     "require": {
          "php": ">=8.0",
+        "ext-exif": "*",
+        "ext-gd": "*",
         "erusev/parsedown": "^1.7"
     },
     "autoload": {

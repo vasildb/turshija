@@ -3,6 +3,7 @@
 namespace Vasil\Turshija;
 
 use Vasil\Turshija\Helpers\App;
+use Vasil\Turshija\Helpers\Image;
 use Vasil\Turshija\Helpers\Parse;
 use Vasil\Turshija\Helpers\Template;
 use Vasil\Turshija\Helpers\File;
@@ -102,7 +103,7 @@ class Turshija
             }
 
             $name = basename($file);
-            File::save(App::exportDir() . '/assets/photos/' . $name, file_get_contents($file));
+            Image::resize($file, App::exportDir() . '/assets/photos/' . $name, 1000);
             $names[] = $name;
         }
 
