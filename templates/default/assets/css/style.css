@@ -66,6 +66,44 @@ a {
 	width: 100px;
 }
 
+.photos {
+	margin-top: 40px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.photos img {
+	width: auto;
+	max-width: 100%;
+	max-height: 100px;
+	display: block;
+}
+
+.blog-post .photos {
+	flex-direction: column;
+	gap: 20px;
+}
+
+.blog-post .photos img {
+	width: 100%;
+	max-height: none;
+}
+
+.homepage .post-photos {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 4px 0 10px 110px;
+}
+
+.homepage .post-photos img {
+	width: auto;
+	max-width: 100%;
+	max-height: 50px;
+	display: block;
+}
+
 /* SECTION TITLE */
 .section-title {
 	margin-top: 40px;
