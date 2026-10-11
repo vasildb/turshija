@@ -16,7 +16,7 @@
     <?php if (!empty($photos)) { ?>
         <div class="photos">
             <?php foreach ($photos as $name) { ?>
-                <a href="<?= htmlspecialchars('/assets/photos/' . rawurlencode($name)) ?>"><img src="<?= htmlspecialchars('/assets/photos/thumbs/' . rawurlencode($name)) ?>" alt="" loading="lazy" /></a>
+                <a href="<?= htmlspecialchars('/assets/photos/' . rawurlencode($name)) ?>" target="_blank" rel="noopener"><img src="<?= htmlspecialchars('/assets/photos/thumbs/' . rawurlencode($name)) ?>" alt="" loading="lazy" /></a>
             <?php } ?>
         </div>
     <?php } ?>

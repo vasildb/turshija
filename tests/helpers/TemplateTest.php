@@ -37,7 +37,7 @@ final class TemplateTest extends TestCase
         $this->assertStringNotContainsString('class="photos"', $html);
 
         $html = Template::render('homepage.php', ['posts' => [], 'photos' => ['a b.jpg']]);
-        $this->assertStringContainsString('<a href="/assets/photos/a%20b.jpg"><img src="/assets/photos/thumbs/a%20b.jpg"', $html);
+        $this->assertStringContainsString('<a href="/assets/photos/a%20b.jpg" target="_blank" rel="noopener"><img src="/assets/photos/thumbs/a%20b.jpg"', $html);
     }
 
     public function testPostPhotos(): void
@@ -46,7 +46,7 @@ final class TemplateTest extends TestCase
         $this->assertStringNotContainsString('class="photos"', $html);
 
         $html = Template::render('post.php', ['post' => '', 'title' => 'T', 'photos' => ['/assets/photos/IMG_1.jpeg']]);
-        $this->assertStringContainsString('<a href="/assets/photos/IMG_1.jpeg"><img src="/assets/photos/IMG_1.jpeg"', $html);
+        $this->assertStringContainsString('<a href="/assets/photos/IMG_1.jpeg" target="_blank" rel="noopener"><img src="/assets/photos/IMG_1.jpeg"', $html);
 
         $post = new PageData(['title' => 'T', 'date' => '2026-01-01'], '', '/posts/hike.md');
         $post->setPhotos(['IMG 2.jpeg']);

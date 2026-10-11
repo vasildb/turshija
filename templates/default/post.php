@@ -5,7 +5,7 @@
     <?php if (!empty($photos)) { ?>
         <div class="photos">
             <?php foreach ($photos as $src) { ?>
-                <a href="<?= htmlspecialchars($src) ?>"><img src="<?= htmlspecialchars($src) ?>" alt="" loading="lazy" /></a>
+                <a href="<?= htmlspecialchars($src) ?>" target="_blank" rel="noopener"><img src="<?= htmlspecialchars($src) ?>" alt="" loading="lazy" /></a>
             <?php } ?>
         </div>
     <?php } ?>
