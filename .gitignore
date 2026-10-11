@@ -6,3 +6,4 @@ src/turshija
 web
 .php-cs-fixer*
 dist
+composer.lock
