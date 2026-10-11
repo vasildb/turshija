@@ -28,6 +28,32 @@ final class ParseTest extends TestCase
         $this->assertStringStartsWith('<h1>', $page->getHtml());
     }
 
+    public function testHorizontalRulesInBody(): void
+    {
+        $file = tempnam(sys_get_temp_dir(), 'turshija');
+        file_put_contents($file, "---\ntitle: Rules\ndate: Oct 2026\n---\n\nAbove\n\n---\n\nHeading\n---\n\nBelow\n");
+
+        $page = Parse::content($file);
+        unlink($file);
+
+        $this->assertSame('Rules', $page->getProp('title'));
+        $this->assertSame('2026-10-01', $page->getDate()->format('Y-m-d'));
+        $this->assertStringContainsString('<hr />', $page->getHtml());
+        $this->assertStringContainsString('<h2>Heading</h2>', $page->getHtml());
+        $this->assertStringContainsString('<p>Below</p>', $page->getHtml());
+    }
+
+    public function testFrontMatterMustStartTheFile(): void
+    {
+        $file = tempnam(sys_get_temp_dir(), 'turshija');
+        file_put_contents($file, "Intro\n\n---\ntitle: Late\n---\n");
+
+        $page = Parse::content($file);
+        unlink($file);
+
+        $this->assertNull($page->getProp('title'));
+    }
+
     public function testValidDate(): void
     {
         $page = new PageData(['date' => '13-09-2026'], '', 'post.md');

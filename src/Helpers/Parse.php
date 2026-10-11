@@ -14,15 +14,12 @@ class Parse
 
         $text = file_get_contents($file);
 
-        $regex = '/^---/m';
-        preg_match_all($regex, $text, $matches, PREG_OFFSET_CAPTURE);
-
-        if (count($matches[0]) !== 2) {
+        if (!preg_match('/\A---[ \t]*\R(?:.*?\R)?---[ \t]*(?:\R|\z)/s', $text, $matches)) {
             return new PageData([], '', '');
         }
 
-        $props = self::parseFrontMatter(trim(substr($text, $matches[0][0][1], $matches[0][1][1] + 3)));
-        $html = self::parseMarkdown((trim(substr($text, $matches[0][1][1] + 3))));
+        $props = self::parseFrontMatter(trim($matches[0]));
+        $html = self::parseMarkdown(trim(substr($text, strlen($matches[0]))));
 
         return new PageData($props, $html, $file);
     }
