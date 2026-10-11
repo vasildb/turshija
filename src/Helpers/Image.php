@@ -4,7 +4,7 @@ namespace Vasil\Turshija\Helpers;
 
 class Image
 {
-    public static function resize(string $src, string $dest, int $maxWidth): void
+    public static function resize(string $src, string $dest, int $maxWidth, int $maxHeight = PHP_INT_MAX): void
     {
         $info = @getimagesize($src);
 
@@ -16,8 +16,10 @@ class Image
         $orientation = self::orientation($src, $info[2]);
         $rotated = $orientation >= 5;
         $width = $rotated ? $info[1] : $info[0];
+        $height = $rotated ? $info[0] : $info[1];
+        $scale = min(1, $maxWidth / $width, $maxHeight / $height);
 
-        if ($width <= $maxWidth && $orientation === 1) {
+        if ($scale >= 1 && $orientation === 1) {
             File::save($dest, file_get_contents($src));
             return;
         }
@@ -25,8 +27,8 @@ class Image
         $image = imagecreatefromstring(file_get_contents($src));
         $image = self::applyOrientation($image, $orientation);
 
-        if (imagesx($image) > $maxWidth) {
-            $image = imagescale($image, $maxWidth, -1, IMG_BICUBIC);
+        if ($scale < 1) {
+            $image = imagescale($image, max(1, (int) round($width * $scale)), max(1, (int) round($height * $scale)), IMG_BICUBIC);
         }
 
         imagealphablending($image, false);

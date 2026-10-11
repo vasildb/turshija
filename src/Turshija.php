@@ -34,7 +34,7 @@ class Turshija
         $postPhotos = array_merge([], ...array_map(fn($p) => $p->getPhotos(), $posts));
         $galleryPhotos = array_values(array_diff($photos, $postPhotos));
 
-        $this->prepareHomepage($posts, array_map([$this, 'photoUrl'], $galleryPhotos));
+        $this->prepareHomepage($posts, $galleryPhotos);
         $this->prepareAssets();
         $this->prepareSitemap($posts);
 
@@ -104,6 +104,7 @@ class Turshija
 
             $name = basename($file);
             Image::resize($file, App::exportDir() . '/assets/photos/' . $name, 1000);
+            Image::resize($file, App::exportDir() . '/assets/photos/thumbs/' . $name, PHP_INT_MAX, 200);
             $names[] = $name;
         }
 

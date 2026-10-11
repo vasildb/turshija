@@ -28,6 +28,18 @@ final class ImageTest extends TestCase
         $this->assertSame([1000, 750], array_slice(getimagesize($this->dir . '/out/wide.jpg'), 0, 2));
     }
 
+    public function testThumbnailByHeight(): void
+    {
+        imagejpeg(imagecreatetruecolor(1000, 750), $this->dir . '/photo.jpg');
+        imagejpeg(imagecreatetruecolor(300, 150), $this->dir . '/short.jpg');
+
+        Image::resize($this->dir . '/photo.jpg', $this->dir . '/thumbs/photo.jpg', PHP_INT_MAX, 200);
+        Image::resize($this->dir . '/short.jpg', $this->dir . '/thumbs/short.jpg', PHP_INT_MAX, 200);
+
+        $this->assertSame([267, 200], array_slice(getimagesize($this->dir . '/thumbs/photo.jpg'), 0, 2));
+        $this->assertFileEquals($this->dir . '/short.jpg', $this->dir . '/thumbs/short.jpg');
+    }
+
     public function testSmallImageIsCopiedUnchanged(): void
     {
         imagejpeg(imagecreatetruecolor(800, 600), $this->dir . '/small.jpg');

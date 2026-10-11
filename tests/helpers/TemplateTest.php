@@ -36,8 +36,8 @@ final class TemplateTest extends TestCase
         $html = Template::render('homepage.php', ['posts' => [], 'photos' => []]);
         $this->assertStringNotContainsString('class="photos"', $html);
 
-        $html = Template::render('homepage.php', ['posts' => [], 'photos' => ['/assets/photos/a%20b.jpg']]);
-        $this->assertStringContainsString('<a href="/assets/photos/a%20b.jpg"><img src="/assets/photos/a%20b.jpg"', $html);
+        $html = Template::render('homepage.php', ['posts' => [], 'photos' => ['a b.jpg']]);
+        $this->assertStringContainsString('<a href="/assets/photos/a%20b.jpg"><img src="/assets/photos/thumbs/a%20b.jpg"', $html);
     }
 
     public function testPostPhotos(): void
@@ -52,7 +52,7 @@ final class TemplateTest extends TestCase
         $post->setPhotos(['IMG 2.jpeg']);
         $html = Template::render('homepage.php', ['posts' => [$post], 'photos' => []]);
         $this->assertStringContainsString('<a class="post-photos" href="/hike">', $html);
-        $this->assertStringContainsString('<img src="/assets/photos/IMG%202.jpeg"', $html);
+        $this->assertStringContainsString('<img src="/assets/photos/thumbs/IMG%202.jpeg"', $html);
     }
 
     public function testTitleIsEscaped(): void
