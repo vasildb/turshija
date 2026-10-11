@@ -10,7 +10,9 @@ class PageData
     private string $html = '';
 
     private ?DateTime $date = null;
+    private bool $hasDay = true;
     private string $url = '';
+    private array $photos = [];
 
     public function __construct($props, $html, $file)
     {
@@ -19,10 +21,22 @@ class PageData
 
         $date = $this->getProp('date');
         if (!empty($date)) {
-            try {
-                $this->date = new DateTime($date);
-            } catch (\Exception) {
-                // Invalid dates are treated as missing
+            foreach (['!M Y', '!F Y', '!Y-m'] as $format) {
+                $monthOnly = DateTime::createFromFormat($format, $date);
+
+                if ($monthOnly !== false && !DateTime::getLastErrors()) {
+                    $this->date = $monthOnly;
+                    $this->hasDay = false;
+                    break;
+                }
+            }
+
+            if ($this->date === null) {
+                try {
+                    $this->date = new DateTime($date);
+                } catch (\Exception) {
+                    // Invalid dates are treated as missing
+                }
             }
         }
 
@@ -48,9 +62,29 @@ class PageData
         return $this->date;
     }
 
+    public function getDisplayDate(): string
+    {
+        return $this->date?->format($this->hasDay ? 'd M Y' : 'M Y') ?? '';
+    }
+
+    public function getW3cDate(): string
+    {
+        return $this->date?->format($this->hasDay ? 'Y-m-d' : 'Y-m') ?? '';
+    }
+
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function getPhotos(): array
+    {
+        return $this->photos;
+    }
+
+    public function setPhotos(array $photos): void
+    {
+        $this->photos = $photos;
     }
 
     private function fileToUrl(string $file): string

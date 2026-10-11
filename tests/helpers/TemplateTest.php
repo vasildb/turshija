@@ -5,6 +5,7 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Vasil\Turshija\Exceptions\TemplateFileDoesNotExist;
 use Vasil\Turshija\Exceptions\TemplateInvalidData;
+use Vasil\Turshija\Helpers\PageData;
 use Vasil\Turshija\Helpers\Template;
 
 final class TemplateTest extends TestCase
@@ -28,6 +29,30 @@ final class TemplateTest extends TestCase
 
         $this->assertStringContainsString('<p></p>', $post);
         $this->assertStringContainsString('Title', $post);
+    }
+
+    public function testHomepagePhotos(): void
+    {
+        $html = Template::render('homepage.php', ['posts' => [], 'photos' => []]);
+        $this->assertStringNotContainsString('class="photos"', $html);
+
+        $html = Template::render('homepage.php', ['posts' => [], 'photos' => ['/assets/photos/a%20b.jpg']]);
+        $this->assertStringContainsString('<a href="/assets/photos/a%20b.jpg"><img src="/assets/photos/a%20b.jpg"', $html);
+    }
+
+    public function testPostPhotos(): void
+    {
+        $html = Template::render('post.php', ['post' => '', 'title' => 'T', 'photos' => []]);
+        $this->assertStringNotContainsString('class="photos"', $html);
+
+        $html = Template::render('post.php', ['post' => '', 'title' => 'T', 'photos' => ['/assets/photos/IMG_1.jpeg']]);
+        $this->assertStringContainsString('<a href="/assets/photos/IMG_1.jpeg"><img src="/assets/photos/IMG_1.jpeg"', $html);
+
+        $post = new PageData(['title' => 'T', 'date' => '2026-01-01'], '', '/posts/hike.md');
+        $post->setPhotos(['IMG 2.jpeg']);
+        $html = Template::render('homepage.php', ['posts' => [$post], 'photos' => []]);
+        $this->assertStringContainsString('<a class="post-photos" href="/hike">', $html);
+        $this->assertStringContainsString('<img src="/assets/photos/IMG%202.jpeg"', $html);
     }
 
     public function testTitleIsEscaped(): void
